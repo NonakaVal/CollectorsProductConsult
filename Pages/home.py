@@ -24,7 +24,7 @@ with col1:
 
         
     st.page_link("Pages/Products.py", label="Consultar Produtos", icon="📦")
-    st.page_link("Pages/Gallery.py", label="Consultar Produtos", icon="🖼️")
+    st.page_link("Pages/Gallery.py", label="Importar imagens como Galeria", icon="🖼️")
 
 
 
