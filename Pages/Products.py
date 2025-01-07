@@ -77,31 +77,23 @@ with tab1:
 
     st.divider()
 
-    st.write("## Informações Gerais")
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.write(f"#### Soma de Itens: {shape[0]}")
-        st.write(f"#### Valor Total: R$ {value_counts:,.2f}")
-
-    with col2:
-        st.write(f"#### Item de Maior valor")
-        st.write(f"##### {max_value_item['TITLE'].values[0]}")
-        st.write(f"### R$ {max_value:,.2f}")
-
- 
-
-    with col3:
-        st.write(f"#### Item de menor valor")
-        st.write(f"##### {min_Value_item['TITLE'].values[0]}")
-        st.write(f"### R$ {min_value:,.2f}")
-
-      
+    st.divider()
 
 
-    st.write("### Contagem de Categorias")
-    st.table(categories_count)
+    st.markdown(f"""
+    ##### informações Gerais
+                
+    ##### `Soma de Itens`: {shape[0]}
+    ##### `Valor Total`: R$ {value_counts:,.2f}
 
+    `Item de Maior valor`: {max_value_item['TITLE'].values[0]}
+        - R$ {max_value:,.2f}
+
+    `Item de menor valor`: {min_Value_item['TITLE'].values[0]}
+        - R$ {min_value:,.2f}
+        
+                    """)
+    
 
 
 with tab2:
