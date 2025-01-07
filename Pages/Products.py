@@ -38,7 +38,7 @@ with tab1:
             return filtered_data
 
 
-        st.write("#### Pesquisar por palavra-chave")
+
 
         search_term = st.text_input("Pesquisar por palavra-chave")
 
