@@ -48,7 +48,7 @@ with tab1:
 
     # Format currency columns
     if "MSHOPS_PRICE" in searched_data.columns:
-        select['MSHOPS_PRICE'] = select['MSHOPS_PRICE'].astype(Float)
+        searched_data['MSHOPS_PRICE'] = searched_data['MSHOPS_PRICE'].astype(Float)
         searched_data["MSHOPS_PRICE"] = searched_data["MSHOPS_PRICE"].apply(
             lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         )
