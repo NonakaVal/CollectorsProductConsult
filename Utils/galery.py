@@ -1,4 +1,4 @@
-from builtins import  len
+from builtins import  len, enumerate, Exception
 from PIL import Image
 
 import streamlit as st
