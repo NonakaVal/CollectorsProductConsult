@@ -34,11 +34,24 @@ def apply_filters(df, categories_df):
     """Apply multiple filters to the DataFrame based on user selections."""
     df_filtered = df.copy()  # Create a copy to avoid modifying the original DataFrame
 
-    # Status filter
-    all_status = ['Todos', 'Ativo', 'Inativo']
-    selected_status = st.sidebar.selectbox("Status", all_status, index=1)
-    df_filtered = filter_by_status(df_filtered, selected_status)
+    col1, col2, col3 = st.columns(3)
 
+    with col1:
+    # Status filter
+        all_status = ['Todos', 'Ativo', 'Inativo']
+        selected_status = st.selectbox("Status", all_status, index=1)
+        df_filtered = filter_by_status(df_filtered, selected_status)
+
+    with col2:
+        min_quantity = st.number_input(
+            "Quantidade mínima", min_value=0, value=1, step=1
+        )
+        # max_quantity = st.sidebar.number_input(
+        #     "Quantidade máxima", min_value=1, value=10, step=1, label_visibility="collapsed"
+        # )
+
+        max_quantity = min_quantity + 10
+        df_filtered = filter_by_quantity(df_filtered, min_quantity, max_quantity)
 # Category filter
     all_categories = categories_df['CATEGORY'].unique().tolist()
 
@@ -99,15 +112,7 @@ def apply_filters(df, categories_df):
     #     df_filtered = filter_by_edition(df_filtered, selected_editions)
 
     # Quantity filter
-    min_quantity = st.sidebar.number_input(
-        "Quantidade mínima", min_value=0, value=1, step=1
-    )
-    # max_quantity = st.sidebar.number_input(
-    #     "Quantidade máxima", min_value=1, value=10, step=1, label_visibility="collapsed"
-    # )
 
-    max_quantity = min_quantity + 10
-    df_filtered = filter_by_quantity(df_filtered, min_quantity, max_quantity)
     # df_filtered = get_link_edit(df_filtered)
     
 
