@@ -9,7 +9,7 @@ from Utils.galery import gallery
 
 
 
-st.write("# Tabela de Consulta de Produtos")
+st.write("#### Tabela de Consulta de Produtos")
 st.write("Em caso de erro apenas atualize a página. F5")
 
 tab1, tab2 = st.tabs(["Consulta  e Pesquisa", "Criar lista de Seleção de Itens"])

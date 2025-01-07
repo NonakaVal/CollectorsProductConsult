@@ -34,13 +34,14 @@ if not st.session_state["authenticated"]:
         if st.button("Login"):
             if authenticate_user(username, password):
                 st.session_state["authenticated"] = True
-                st.success("Login successful!")
+                st.success("Login aceito 🎉")
+                st.rerun()
                 
             else:
                 st.error("Invalid username or password.")
 else:
     # Navigation and Pages
-    st.sidebar.title("Menu")
+    
     
 
     # Navegação de páginas
@@ -68,4 +69,6 @@ else:
     pg.run()
 
 
-
+    if st.sidebar.button("Logout"):
+        st.session_state["authenticated"] = False
+        st.rerun() 
