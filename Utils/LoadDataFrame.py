@@ -48,18 +48,13 @@ def load_and_process_data():
         # )
 
         # Combine default columns with the selected additional columns
-        final_columns = default_columns + filtered_columns
+        final_columns = default_columns
 
         # Ensure the final column order is respected
         select_data = data[final_columns]
 
 
 
-        # Format currency columns
-        if "MSHOPS_PRICE" in select_data.columns:
-            select_data["MSHOPS_PRICE"] = select_data["MSHOPS_PRICE"].apply(
-                lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-            )
     
 
         # Apply filters and categorization

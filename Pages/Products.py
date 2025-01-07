@@ -17,6 +17,7 @@ tab1, tab2 = st.tabs(["Consulta  e Pesquisa", "Criar lista de Seleção de Itens
 with tab1:
     # Em algum lugar no seu código
     data = load_and_process_data()
+    count_data = data.copy()
 
     ##############################################################################################
     # Função de Pesquisa por Correspondência de Palavras
@@ -41,8 +42,15 @@ with tab1:
 
         search_term = st.text_input("Pesquisar por palavra-chave")
 
+
     # Filtra os dados com base no termo de pesquisa
     searched_data = search_items(data, search_term)
+
+    # Format currency columns
+    if "MSHOPS_PRICE" in searched_data.columns:
+        searched_data["MSHOPS_PRICE"] = searched_data["MSHOPS_PRICE"].apply(
+            lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        )
 
     st.dataframe(
     searched_data,
@@ -56,8 +64,44 @@ with tab1:
     )
 
     shape = data.shape
+    value_counts = count_data["MSHOPS_PRICE"].astype(float).sum()
+    min_value = count_data["MSHOPS_PRICE"].astype(float).min()
+    max_value = count_data["MSHOPS_PRICE"].astype(float).max()
 
-    st.write(f"Total de Itens: {shape[0]}")
+    min_Value_item = count_data[count_data["MSHOPS_PRICE"] == min_value]
+    max_value_item = count_data[count_data["MSHOPS_PRICE"] == max_value]
+
+    categories_count = data['CATEGORY'].value_counts()
+    
+
+    st.divider()
+
+    st.write("## Informações Gerais")
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.write(f"#### Soma de Itens: {shape[0]}")
+        st.write(f"#### Valor Total: R$ {value_counts:,.2f}")
+
+    with col2:
+        st.write(f"#### Item de Maior valor")
+        st.write(f"##### {max_value_item['TITLE'].values[0]}")
+        st.write(f"### R$ {max_value:,.2f}")
+
+ 
+
+    with col3:
+        st.write(f"#### Item de menor valor")
+        st.write(f"##### {min_Value_item['TITLE'].values[0]}")
+        st.write(f"### R$ {min_value:,.2f}")
+
+      
+
+
+    st.write("### Contagem de Categorias")
+    st.table(categories_count)
+
+
 
 with tab2:
 
