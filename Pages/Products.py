@@ -48,6 +48,7 @@ with tab1:
 
     # Format currency columns
     if "MSHOPS_PRICE" in searched_data.columns:
+        searched_data["MSHOPS_PRICE"] = pd.to_numeric(searched_data["MSHOPS_PRICE"], errors='coerce')
         searched_data["MSHOPS_PRICE"] = searched_data["MSHOPS_PRICE"].apply(
             lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         )
