@@ -51,7 +51,7 @@ def apply_filters(df, categories_df):
 
     with st.expander("Filtrar por Categoria"):
         
-        st.write("#### Filtrar por Categoria")
+        st.write("#### Selecionar Categoria")
         selected_category = st.radio(
             "Categoria e Sub-categoria",
             all_categories,
