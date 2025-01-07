@@ -56,26 +56,35 @@ def apply_filters(df, categories_df):
     all_categories = categories_df['CATEGORY'].unique().tolist()
 
     # Adding "Todas" as the first option
-    all_categories = ['Todas'] + all_categories
+    # all_categories = ['Todas'] + all_categories
 
+    all_categories = categories_df['CATEGORY'].unique().tolist()
+    selected_categories = st.multiselect(
+        "Categoria e Sub-categoria", 
+        ['Todas'] + all_categories, 
+        placeholder="Categorias Mercado Livre", 
+        label_visibility="collapsed"
+    )
+    if selected_categories and "Todas" not in selected_categories:
+        df_filtered = filter_by_category(df_filtered, selected_categories)
     # Display radio buttons for category selection
     # col1, col2 = st.columns([1, 2])
     # with col1:
 
-    with st.expander("Filtrar por Categoria"):
+    # with st.expander("Filtrar por Categoria"):
         
-        st.write("#### Selecionar Categoria")
-        selected_category = st.radio(
-            "Categoria e Sub-categoria",
-            all_categories,
-            index=0,  # Default selection to "Todas"
-            label_visibility="collapsed",
-            horizontal = True
-        )
+    #     st.write("#### Selecionar Categoria")
+    #     selected_category = st.radio(
+    #         "Categoria e Sub-categoria",
+    #         all_categories,
+    #         index=0,  # Default selection to "Todas"
+    #         label_visibility="collapsed",
+    #         horizontal = True
+    #     )
 
-        # Filter the DataFrame based on the selected category
-        if selected_category != "Todas":
-            df_filtered = filter_by_category(df_filtered, [selected_category])
+    #     # Filter the DataFrame based on the selected category
+    #     if selected_category != "Todas":
+    #         df_filtered = filter_by_category(df_filtered, [selected_category])
 
     # Subcategory filter
     # all_subcategories = sorted(df['SUBCATEGORY'].unique().tolist(), reverse=True)
