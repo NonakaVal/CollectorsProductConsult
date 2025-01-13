@@ -1,7 +1,7 @@
 streamlit 
-pysqlite3-binary
+
 st-gsheets-connection
 pillow
 crewai
 crewai-tools
-sqlite3 
+db-sqlite3
