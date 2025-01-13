@@ -12,7 +12,7 @@ def format_data(data):
     # Criação da coluna de links clicáveis
 
     # Ordenação das colunas
-    var_order = ["IMG",'ITEM_ID', 'SKU', 'TITLE', 'DESCRIPTION', 'MSHOPS_PRICE', 'MARKETPLACE_PRICE',  'CATEGORY', 'STATUS', 'QUANTITY', "ITEM_LINK", "CONDITION","URL"]
+    var_order = ["IMG",'ITEM_ID', 'SKU', 'TITLE', 'DESCRIPTION', 'MSHOPS_PRICE', 'MARKETPLACE_PRICE',  'CATEGORY', 'STATUS', 'QUANTITY', "ITEM_LINK", "CONDITION","URL", "SKU_DATE"]
     data = data.reindex(columns=var_order)
 
     # Remoção de duplicatas

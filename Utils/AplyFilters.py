@@ -4,6 +4,10 @@ from Utils.Get_Link import get_link_edit
 # get the url of google sheets
 url = st.secrets["product_url"]
 # Filter Functions
+
+
+   
+
 def filter_by_category(df, categories):
     """Filter the DataFrame by the selected categories."""
     return df[df['CATEGORY'].isin(categories)] if categories else df
@@ -52,11 +56,34 @@ def apply_filters(df, categories_df):
 
         max_quantity = min_quantity + 10
         df_filtered = filter_by_quantity(df_filtered, min_quantity, max_quantity)
+
+
+    with col3:     
+          
+
+        def filter_by_date_range(df, date):
+            """Filter the DataFrame by a date range."""
+            return df[df['SKU_DATE'].isin(date)] if date else df
+    
+        
+        alldates = df['SKU_DATE'].unique().tolist()
+        selected_date = st.multiselect(
+        "Data de cadastro no SKU", 
+        alldates, 
+       
+      
+        # label_visibility="collapsed"
+    )
+        if selected_date and "Todas" not in selected_date:
+            df_filtered = filter_by_date_range(df_filtered, selected_date)
+
+    
+
+
 # Category filter
     all_categories = categories_df['CATEGORY'].unique().tolist()
 
     # Adding "Todas" as the first option
-
     
     all_categories = categories_df['CATEGORY'].unique().tolist()
     selected_categories = st.multiselect(
@@ -68,7 +95,8 @@ def apply_filters(df, categories_df):
     if selected_categories and "Todas" not in selected_categories:
         df_filtered = filter_by_category(df_filtered, selected_categories)
 
-
+    
+ 
         
     # Display radio buttons for category selection
     # col1, col2 = st.columns([1, 2])

@@ -4,6 +4,16 @@ from Utils.AplyFilters import apply_filters
 from Utils.GoogleSheetManager import GoogleSheetManager
 
 
+
+def sku_to_date(sku):
+    month_year = sku.split('-')[1]  # Extraindo, por exemplo, '0125' de '000-0125-0000'
+    month = month_year[2:]          # Mês é os dois primeiros dígitos '01'
+    year = '20' + month_year[:2]    # Ano é '20' seguido dos dois últimos dígitos, '25' formando '2025'
+
+    return f'{year}-{month}'        # Retorna a string no formato '2025-01'
+
+
+    
 def load_and_process_data():
     # Get the URL of Google Sheets
     gs_manager = GoogleSheetManager()
@@ -29,17 +39,17 @@ def load_and_process_data():
 
 
         # List of all columns
-        all_columns = data.columns.tolist()
+        data['SKU_DATE'] = data['SKU'].apply(sku_to_date)
         
         # Default columns to always display
         default_columns = [
             "IMG", "ITEM_ID", "SKU", "TITLE", 
             "MSHOPS_PRICE", "QUANTITY", "STATUS", 
-        "URL", "ITEM_LINK", "DESCRIPTION", "CATEGORY"
+        "URL", "ITEM_LINK", "DESCRIPTION", "CATEGORY","SKU_DATE"
         ]
 
         # Filter out default columns from the options in the multiselect
-        filtered_columns = [col for col in all_columns if col not in default_columns]
+        # filtered_columns = [col for col in all_columns if col not in default_columns]
 
         # Widget multiselect for additional columns
         # selected_columns = st.sidebar.multiselect(
@@ -55,7 +65,6 @@ def load_and_process_data():
 
 
 
-    
 
         # Apply filters and categorization
         select_data = apply_filters(select_data, categorias)

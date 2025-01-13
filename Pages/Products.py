@@ -47,11 +47,11 @@ with tab1:
     searched_data = search_items(data, search_term)
 
     # Format currency columns
-    if "MSHOPS_PRICE" in searched_data.columns:
-        searched_data['MSHOPS_PRICE'] = searched_data['MSHOPS_PRICE'].astype(float)
-        searched_data["MSHOPS_PRICE"] = searched_data["MSHOPS_PRICE"].apply(
-            lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-        )
+    # if "MSHOPS_PRICE" in searched_data.columns:
+    #     searched_data['MSHOPS_PRICE'] = searched_data['MSHOPS_PRICE'].astype(float)
+    #     searched_data["MSHOPS_PRICE"] = searched_data["MSHOPS_PRICE"].apply(
+    #         lambda x: f"R$ {x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    #     )
 
     st.dataframe(
     searched_data,
@@ -63,6 +63,9 @@ with tab1:
         )
     }
     )
+
+# Aplicar a função no DataFrame depois de ler os dados:
+ 
 
     shape = data.shape
     value_counts = count_data["MSHOPS_PRICE"].astype(float).sum()
