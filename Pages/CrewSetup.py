@@ -9,7 +9,7 @@ from crewai_tools import SerperDevTool, ScrapeWebsiteTool
 
 # Load OpenAI API Key
 openai_key = st.secrets["OPENAI_API_KEY"]
-
+openai_key = st.secrets["SERPER_API_KEY"]
 # Initialize the language model
 llm = ChatOpenAI(
     model="gpt-3.5-turbo",
