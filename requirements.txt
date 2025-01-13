@@ -1,3 +1,6 @@
 streamlit 
 st-gsheets-connection
 pillow
+crewai
+crewai-tools
+lanchain-openai
