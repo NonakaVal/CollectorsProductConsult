@@ -5,3 +5,4 @@ pillow
 crewai
 crewai-tools
 db-sqlite3
+chromadb
