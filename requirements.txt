@@ -4,3 +4,4 @@ st-gsheets-connection
 pillow
 crewai
 crewai-tools
+sqlite3 
