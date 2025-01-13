@@ -4,4 +4,5 @@ st-gsheets-connection
 pillow
 crewai
 crewai-tools
-db-sqlite3
+
+db-sqlite3 >= 3.35
