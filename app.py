@@ -61,7 +61,7 @@ else:
             # "Controle": [], 
             # "Home" : [home],
             "": [home],
-            "Produtos": [products, gallery, crew],
+            "Produtos": [products, gallery],
         
             
         }
