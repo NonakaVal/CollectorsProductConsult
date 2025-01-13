@@ -51,7 +51,7 @@ else:
 
     gallery = st.Page("Pages/Gallery.py", title="Ver Pastas de Imagens", icon="🖼️")
 
-    crew = st.Page("Pages/CrewSetup.py", title="Crew Setup", icon="⚙️")
+    
 
     log = st.Page("Pages/log.py", title="TestLog", icon="⚙️")
 
