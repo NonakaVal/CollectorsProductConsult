@@ -1,3 +1,3 @@
-from Utils.galery import gallery
+from Utils.Galery import gallery
 
 gallery()

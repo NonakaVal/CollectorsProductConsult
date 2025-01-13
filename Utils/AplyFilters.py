@@ -1,164 +1,79 @@
 import streamlit as st
 from Utils.Get_Link import get_link_edit
 
-# get the url of google sheets
+# Get the URL of Google Sheets
 url = st.secrets["product_url"]
-# Filter Functions
 
+# ------------------------- Filter Functions ------------------------- #
 
-   
-
-def filter_by_category(df, categories):
-    """Filter the DataFrame by the selected categories."""
-    return df[df['CATEGORY'].isin(categories)] if categories else df
-
-def filter_by_subcategory(df, subcategories):
-    """Filter the DataFrame by the selected subcategories."""
-    return df[df['SUBCATEGORY'].isin(subcategories)] if subcategories else df
+def filter_by_column(df, column, selections):
+    """Generic filter for DataFrame based on column and selected values."""
+    return df[df[column].isin(selections)] if selections else df
 
 def filter_by_status(df, status):
-    """Filter the DataFrame by the selected status (Active/Inactive)."""
-    return df[df['STATUS'] == status] if status != "Todos" else df
-
-def filter_by_condition(df, conditions):
-    """Filter the DataFrame by the selected conditions."""
-    
-    return df[df['CONDITION'].isin(conditions)] if conditions else df
-
-def filter_by_edition(df, editions):
-    """Filter the DataFrame by the selected editions."""
-    return df[df['EDITION'].isin(editions)] if editions else df
+    """Filter DataFrame by status."""
+    return df if status == "Todos" else df[df['STATUS'] == status]
 
 def filter_by_quantity(df, min_qty, max_qty):
-    """Filter the DataFrame by the selected quantity range."""
+    """Filter DataFrame by quantity range."""
     return df[(df['QUANTITY'] >= min_qty) & (df['QUANTITY'] <= max_qty)]
 
-# Applying filters
+def filter_by_date_range(df, selected_dates):
+    """Filter DataFrame by selected dates."""
+    return df[df['SKU_DATE'].isin(selected_dates)] if selected_dates else df
+
+# ------------------------- Apply Filters ------------------------- #
+
 def apply_filters(df, categories_df):
-    """Apply multiple filters to the DataFrame based on user selections."""
-    df_filtered = df.copy()  # Create a copy to avoid modifying the original DataFrame
+    """Apply all filters to the DataFrame based on user selections."""
+    df_filtered = df.copy()
 
-    col1, col2, col3 = st.columns(3)
+    # ---- Columns for Filters ---- #
+    col1, col2, col3, col4 = st.columns(4)
 
+    # ---- Status Filter ---- #
     with col1:
-    # Status filter
-        all_status = ['Todos', 'Ativo', 'Inativo']
-        selected_status = st.selectbox("Status", all_status, index=1)
+        selected_status = st.selectbox("Status", ['Todos', 'Ativo', 'Inativo'], index=1)
         df_filtered = filter_by_status(df_filtered, selected_status)
 
+   
     with col2:
-        min_quantity = st.number_input(
-            "Quantidade mínima", min_value=0, value=1, step=1
-        )
-        # max_quantity = st.sidebar.number_input(
-        #     "Quantidade máxima", min_value=1, value=10, step=1, label_visibility="collapsed"
-        # )
-
-        max_quantity = min_quantity + 10
-        df_filtered = filter_by_quantity(df_filtered, min_quantity, max_quantity)
+    # ---- Category Filter ---- #
+        all_categories = categories_df['CATEGORY'].unique().tolist()
+        selected_categories = st.multiselect("Categoria", all_categories)
+        df_filtered = filter_by_column(df_filtered, 'CATEGORY', selected_categories)
 
 
-    with col3:     
-          
-
-        def filter_by_date_range(df, date):
-            """Filter the DataFrame by a date range."""
-            return df[df['SKU_DATE'].isin(date)] if date else df
-    
-        
-        alldates = df['SKU_DATE'].unique().tolist()
-        selected_date = st.multiselect(
-        "Data de cadastro no SKU", 
-        alldates, 
-       
-      
-        # label_visibility="collapsed"
-    )
-        if selected_date and "Todas" not in selected_date:
-            df_filtered = filter_by_date_range(df_filtered, selected_date)
-
-    
-
-
-# Category filter
-    all_categories = categories_df['CATEGORY'].unique().tolist()
-
-    # Adding "Todas" as the first option
-    
-    all_categories = categories_df['CATEGORY'].unique().tolist()
-    selected_categories = st.multiselect(
-        "Categoria e Sub-categoria", 
-        all_categories, 
-        placeholder="Categorias Mercado Livre", 
-        label_visibility="collapsed"
-    )
-    if selected_categories and "Todas" not in selected_categories:
-        df_filtered = filter_by_category(df_filtered, selected_categories)
-
-    
- 
-        
-    # Display radio buttons for category selection
-    # col1, col2 = st.columns([1, 2])
-    # with col1:
-
-    # with st.expander("Filtrar por Categoria"):
-        
-    #     st.write("#### Selecionar Categoria")
-    #     selected_category = st.radio(
-    #         "Categoria e Sub-categoria",
-    #         all_categories,
-    #         index=0,  # Default selection to "Todas"
-    #         label_visibility="collapsed",
-    #         horizontal = True
-    #     )
-
-    #     # Filter the DataFrame based on the selected category
-    #     if selected_category != "Todas":
-    #         df_filtered = filter_by_category(df_filtered, [selected_category])
-
-    # Subcategory filter
-    # all_subcategories = sorted(df['SUBCATEGORY'].unique().tolist(), reverse=True)
-    # selected_subcategories = st.sidebar.multiselect(
-    #     "Escolha uma Subcategoria", 
-    #     ['Todas'] + all_subcategories, 
-    #     placeholder="Subcategorias", 
-    #     label_visibility="collapsed"
-    # )
-    # if selected_subcategories and "Todas" not in selected_subcategories:
-    #     df_filtered = filter_by_subcategory(df_filtered, selected_subcategories)
 
   
+    with col3:
+         # ---- Quantity Filter ---- #
+        min_quantity = st.number_input("Quantidade mínima", min_value=0, value=1, step=1)
+        max_quantity = min_quantity + 10
+        df_filtered = filter_by_quantity(df_filtered, min_quantity, max_quantity)
+    with col4:
+        # ---- Date Filter ---- #   
+        all_dates = df['SKU_DATE'].unique().tolist()
+        selected_dates = st.multiselect("Data de cadastro no SKU", all_dates)
+        df_filtered = filter_by_date_range(df_filtered, selected_dates)
+
+
+    # # ---- Subcategory Filter ---- #
+    # all_subcategories = df['SUBCATEGORY'].unique().tolist()
+    # selected_subcategories = st.multiselect("Subcategoria", all_subcategories)
+    # df_filtered = filter_by_column(df_filtered, 'SUBCATEGORY', selected_subcategories)
+
+    # # ---- Condition Filter ---- #
     # all_conditions = df['CONDITION'].unique().tolist()
-    # selected_conditions = st.sidebar.multiselect(
-    #     "Condição", 
-    #     ['Todas'] + all_conditions, 
-    #     placeholder="Condição", 
-    #     label_visibility="collapsed"
-    # )
-    # if selected_conditions and "Todas" not in selected_conditions:
-    #     df_filtered = filter_by_condition(df_filtered, selected_conditions)
-    
+    # selected_conditions = st.multiselect("Condição", all_conditions)
+    # df_filtered = filter_by_column(df_filtered, 'CONDITION', selected_conditions)
 
-
+    # # ---- Edition Filter ---- #
     # all_editions = df['EDITION'].unique().tolist()
-    # selected_editions = st.sidebar.multiselect(
-    #     "Edição", 
-    #     ['Todas'] + all_editions, 
-    #     placeholder="Edições", 
-    #     label_visibility="collapsed"
-    # )
-    # if selected_editions and "Todas" not in selected_editions:
-    #     df_filtered = filter_by_edition(df_filtered, selected_editions)
+    # selected_editions = st.multiselect("Edição", all_editions)
+    # df_filtered = filter_by_column(df_filtered, 'EDITION', selected_editions)
 
-    # Quantity filter
-
-    # df_filtered = get_link_edit(df_filtered)
-    
+    # ---- Apply Link Edit ---- #
+    df_filtered = get_link_edit(df_filtered)
 
     return df_filtered
-
-
-
-
-

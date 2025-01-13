@@ -5,7 +5,8 @@ from Utils.Selectors import select_items_to_ad
 from Utils.GoogleSheetManager import GoogleSheetManager
 from Utils.Reports import generate_report
 import datetime
-from Utils.galery import gallery
+
+from builtins import int, float, str , list , open
 
 
 
