@@ -4,5 +4,4 @@ st-gsheets-connection
 pillow
 crewai
 crewai-tools
-sqlite3 
-chromadb
+db-sqlite3
