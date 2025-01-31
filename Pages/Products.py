@@ -148,8 +148,8 @@ with tab2:
         total_items = select['CATEGORY'].value_counts().sum()
         
         # Remover formatação do preço e convertê-lo para inteiro
-        select['MSHOPS_PRICE'] = select['MSHOPS_PRICE'].str.replace('R$', '', regex=False).str.replace(',00', '', regex=False).str.replace('.', '', regex=False).str.strip()
-        select['MSHOPS_PRICE'] = select['MSHOPS_PRICE'].astype(int)
+        # select['MSHOPS_PRICE'] = select['MSHOPS_PRICE'].str.replace('R$', '', regex=False).str.replace(',00', '', regex=False).str.replace('.', '', regex=False).str.strip()
+        # select['MSHOPS_PRICE'] = select['MSHOPS_PRICE'].astype(int)
 
         # Soma total dos preços e formatação
         price_counts = select["MSHOPS_PRICE"].sum()
